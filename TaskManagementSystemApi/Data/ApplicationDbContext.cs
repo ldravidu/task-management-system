@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace TaskManagementSystemApi.Models;
+namespace TaskManagementSystemApi.Data;
 
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Task> Tasks { get; set; }
+    public DbSet<Models.Task> Tasks { get; set; }
 }
