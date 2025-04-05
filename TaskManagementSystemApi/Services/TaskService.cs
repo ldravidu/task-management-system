@@ -32,14 +32,14 @@ namespace TaskManagementSystemApi.Services
             {
                 Title = taskDto.Title,
                 Description = taskDto.Description,
-                CreatedDate = DateTime.UtcNow,
+                CreatedDate = DateOnly.FromDateTime(DateTime.UtcNow),
                 DueDate = taskDto.DueDate,
-                Priority = taskDto.Priority,
+                Priority = taskDto.Priority != null ? Enum.Parse<TaskPriority>(taskDto.Priority.ToString()!) : TaskPriority.Low,
                 Status = Models.TaskStatus.Todo,
                 ProjectId = taskDto.ProjectId,
                 AssignedToId = taskDto.AssignedToId,
                 CreatedById = currentUserId,
-                UpdatedDate = DateTime.Now,
+                UpdatedDate = DateOnly.FromDateTime(DateTime.UtcNow),
             };
 
             await _taskRepository.Add(task);
@@ -67,10 +67,10 @@ namespace TaskManagementSystemApi.Services
                 task.DueDate = taskDto.DueDate;
 
             if (taskDto.Status != null)
-                task.Status = (Models.TaskStatus)taskDto.Status;
+                task.Status = Enum.Parse<Models.TaskStatus>(taskDto.Status.ToString()!);
 
             if (taskDto.Priority != null)
-                task.Priority = (TaskPriority)taskDto.Priority;
+                task.Priority = Enum.Parse<TaskPriority>(taskDto.Priority.ToString()!);
 
             if (taskDto.AssignedToId != null)
                 task.AssignedToId = taskDto.AssignedToId;
@@ -115,8 +115,8 @@ namespace TaskManagementSystemApi.Services
                 Title = task.Title,
                 Description = task.Description,
                 DueDate = task.DueDate,
-                Priority = task.Priority,
-                Status = task.Status,
+                Priority = task.Priority.ToString(),
+                Status = task.Status.ToString(),
                 ProjectId = task.ProjectId,
                 AssignedToId = task.AssignedToId,
                 CreatedDate = task.CreatedDate,
