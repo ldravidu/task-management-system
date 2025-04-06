@@ -17,13 +17,13 @@ public class ApplicationDbContext : DbContext
             .WithMany(u => u.AssignedTasks)
             .HasForeignKey(t => t.AssignedToId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Models.Task>()
             .HasOne(t => t.CreatedBy)
             .WithMany(u => u.CreatedTasks)
             .HasForeignKey(t => t.CreatedById)
-            .IsRequired(false)
+            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Models.Task>()
@@ -31,7 +31,7 @@ public class ApplicationDbContext : DbContext
             .WithMany(p => p.Tasks)
             .HasForeignKey(t => t.ProjectId)
             .IsRequired(false)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Models.User>()
             .HasMany(u => u.MemberOfProjects)

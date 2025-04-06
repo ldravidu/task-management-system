@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementSystemApi.Data;
 
@@ -10,9 +11,11 @@ using TaskManagementSystemApi.Data;
 namespace TaskManagementSystemApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250406095508_UpdateForeignKeyBehavior")]
+    partial class UpdateForeignKeyBehavior
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -153,7 +156,7 @@ namespace TaskManagementSystemApi.Migrations
                     b.HasOne("TaskManagementSystemApi.Models.User", "CreatedBy")
                         .WithMany("CreatedTasks")
                         .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("TaskManagementSystemApi.Models.Project", "Project")
