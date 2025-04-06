@@ -3,8 +3,8 @@ namespace TaskManagementSystemApi.Models
     public class Project
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public required string Name { get; set; }
+        public string Description { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 

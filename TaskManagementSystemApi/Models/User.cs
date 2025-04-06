@@ -7,8 +7,8 @@ namespace TaskManagementSystemApi.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
 
-        public ICollection<Tasks> AssignedTasks { get; set; }
-        public ICollection<Tasks> CreatedTasks { get; set; }
-        public ICollection<Projects> MemberOfProjects { get; set; }
+        public ICollection<Task> AssignedTasks { get; set; } = new List<Task>();
+        public ICollection<Task> CreatedTasks { get; set; } = new List<Task>();
+        public ICollection<Project> MemberOfProjects { get; set; } = new List<Project>();
     }
 }
