@@ -12,12 +12,19 @@ namespace TaskManagementSystemApi.Repositories
 
         public async Task<IEnumerable<Models.Task>> GetTasksWithDetails()
         {
-            return await _context.Tasks.ToListAsync();
+            return await _context.Tasks
+                .Include(t => t.Project)
+                .Include(t => t.AssignedTo)
+                .Include(t => t.CreatedBy)
+                .ToListAsync();
         }
 
         public async Task<Models.Task?> GetTaskWithDetails(long id)
         {
             return await _context.Tasks
+                .Include(t => t.Project)
+                .Include(t => t.AssignedTo)
+                .Include(t => t.CreatedBy)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
@@ -25,6 +32,7 @@ namespace TaskManagementSystemApi.Repositories
         {
             return await _context.Tasks
                 .Where(t => t.AssignedToId == userId)
+                .Include(t => t.Project)
                 .ToListAsync();
         }
 
@@ -32,6 +40,7 @@ namespace TaskManagementSystemApi.Repositories
         {
             return await _context.Tasks
                 .Where(t => t.ProjectId == projectId)
+                .Include(t => t.AssignedTo)
                 .ToListAsync();
         }
     }
